@@ -50,6 +50,7 @@ declare -A plugin_colors=(
     ["time"]="light_blue text"
     ["pomodoro"]="red text"
     ["window"]="bg_main blue"
+    ["current"]="bg_main blue"
 )
 
 get_plugin_colors() {
@@ -167,6 +168,7 @@ set_theme() {
             ["time"]="text light_blue"
             ["pomodoro"]="text red"
             ["window"]="blue bg_main"
+            ["current"]="blue bg_main"
         )
     fi
 }
@@ -195,8 +197,7 @@ start_icon() {
     window) start_icon=" #W" ;;
     esac
 
-    first_plugin=${lplugins[0]}
-    IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "$first_plugin")"
+    IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "current")"
     tmux set-option -g status-left "#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${light_yellow},} ${start_icon} "
 }
 
@@ -257,9 +258,9 @@ window_list() {
 
     if $show_powerline; then
         tmux set-window-option -g window-status-current-format \
-            "#[fg=${wfg},bg=${wbg}]${wl_sep}#[bg=${wfg}]${current_flags}#[fg=${wbg}]${spacer}#I:#W${spacer}#[fg=${wfg},bg=${wbg}]${wr_sep}"
+            "#[fg=${wfg},bg=bg_main]${wl_sep}#[bg=${wfg}]${current_flags}#[fg=${wbg}]${spacer}#I:#W${spacer}#[fg=${wfg},bg=bg_main]${wr_sep}"
         tmux set-window-option -g window-status-format \
-            "#[fg=${bg_alt},bg=${wbg}]${wl_sep}#[bg=${bg_alt}]${flags}#[fg=${white}]${spacer}#I:#W${spacer}#[fg=${bg_alt},bg=${wbg}]${wr_sep}"
+            "#[fg=${bg_alt},bg=bg_main]${wl_sep}#[bg=${bg_alt}]${flags}#[fg=${white}]${spacer}#I:#W${spacer}#[fg=${bg_alt},bg=bg_main]${wr_sep}"
     else
         tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}] #I:#W${spacer}${current_flags} "
         tmux set-window-option -g window-status-format "#[fg=${white},bg=${bg_alt}] #I:#W${spacer}${flags} "
