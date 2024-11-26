@@ -5,11 +5,13 @@ if [ -z "$TMUX" ]; then
     exit 1
 fi
 
-# Check for olimorris/tmux-pomodoro-plus scripts
 current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-POMODORO_SCRIPT="$current_dir/../../tmux-pomodoro-plus/scripts/pomodoro.sh"
-POMODORO_HELPER="$current_dir/../../tmux-pomodoro-plus/scripts/helpers.sh"
+pomodoro_path=$(get_tmux_option "@tmux2k-pomodoro-path" "$current_dir/../../tmux-pomodoro-plus")
 
+POMODORO_SCRIPT="$pomodoro_path/scripts/pomodoro.sh"
+POMODORO_HELPER="$pomodoro_path/scripts/helpers.sh"
+
+# Check for olimorris/tmux-pomodoro-plus scripts
 if [ -f "$POMODORO_SCRIPT" ]; then
     . "$POMODORO_SCRIPT"
     . "$POMODORO_HELPER"
