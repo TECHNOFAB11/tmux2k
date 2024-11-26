@@ -6,6 +6,7 @@ if [ -z "$TMUX" ]; then
 fi
 
 current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$current_dir"/utils.sh
 pomodoro_path=$(get_tmux_option "@tmux2k-pomodoro-path" "$current_dir/../../tmux-pomodoro-plus")
 
 POMODORO_SCRIPT="$pomodoro_path/scripts/pomodoro.sh"
