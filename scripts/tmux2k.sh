@@ -8,7 +8,6 @@ source "$current_dir"/utils.sh
 show_powerline=$(get_tmux_option "@tmux2k-show-powerline" true)
 window_list_alignment=$(get_tmux_option "@tmux2k-window-list-alignment" 'absolute-centre')
 refresh_rate=$(get_tmux_option "@tmux2k-refresh-rate" 60)
-start_icon=$(get_tmux_option "@tmux2k-start-icon" "session")
 l_sep=$(get_tmux_option "@tmux2k-left-sep" )
 r_sep=$(get_tmux_option "@tmux2k-right-sep" )
 wl_sep=$(get_tmux_option "@tmux2k-window-left-sep" )
@@ -191,16 +190,6 @@ set_options() {
     tmux set-window-option -g window-status-current-style "bold"
 }
 
-start_icon() {
-    case $start_icon in
-    session) start_icon=" #S" ;;
-    window) start_icon=" #W" ;;
-    esac
-
-    IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "current")"
-    tmux set-option -g status-left "#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${light_yellow},} ${start_icon} "
-}
-
 status_bar() {
     side=$1
     if [ "$side" == "left" ]; then
@@ -275,7 +264,6 @@ window_list() {
 main() {
     set_theme
     set_options
-    start_icon
     status_bar "left"
     window_list
     status_bar "right"
